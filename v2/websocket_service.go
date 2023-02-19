@@ -678,7 +678,7 @@ func WsMarketStatServe(symbol string, handler WsMarketStatHandler, errHandler Er
 }
 
 // WsMarketRollingStatServe similar to WsMarketStatServe but requests specific window size
-func WsMarketRollingStatServe(symbol string, handler WsMarketStatHandler, errHandler ErrHandler, window string) (doneC, stopC chan struct{}, err error) {
+func WsMarketRollingStatServe(window string, symbol string, handler WsMarketStatHandler, errHandler ErrHandler) (doneC, stopC chan struct{}, err error) {
 	endpoint := fmt.Sprintf("%s/%s@ticker_%s", getWsEndpoint(), strings.ToLower(symbol), window)
 	cfg := newWsConfig(endpoint)
 	wsHandler := func(message []byte) {
@@ -713,7 +713,7 @@ func WsAllMarketsStatServe(handler WsAllMarketsStatHandler, errHandler ErrHandle
 }
 
 // WsAllMarketsRollingStatServe similar to WsAllMarketsStatServe but requests specific window size
-func WsAllMarketsRollingStatServe(handler WsAllMarketsStatHandler, errHandler ErrHandler, window string) (doneC, stopC chan struct{}, err error) {
+func WsAllMarketsRollingStatServe(window string, handler WsAllMarketsStatHandler, errHandler ErrHandler) (doneC, stopC chan struct{}, err error) {
 	endpoint := fmt.Sprintf("%s/!ticker_%s@arr", getWsEndpoint(), window)
 	cfg := newWsConfig(endpoint)
 	wsHandler := func(message []byte) {
